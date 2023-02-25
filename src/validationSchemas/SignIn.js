@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const signInValidationSchema = yup.object().shape({
-  email: yup.string().email().required("e-mail is required"),
+  username: yup.string(),
 
   password: yup
     .string()

@@ -3,9 +3,11 @@ import { Formik, useField } from "formik";
 import StyleTextInpunt from "../components/StyledTextInput";
 import StyledText from "../components/StyledText";
 import { signInValidationSchema } from "../validationSchemas/SignIn";
+import useSignIn from "../hooks/useSignIn";
+import { useNavigate } from "react-router-native";
 
 const initialValues = {
-  email: "",
+  username: "",
   password: "",
 };
 const styles = StyleSheet.create({
@@ -35,16 +37,31 @@ const FormikInputValue = ({ name, ...props }) => {
 };
 
 const SignIn = () => {
+  const [signIn] = useSignIn();
+  const navigate = useNavigate();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+
+    try {
+      const { data } = await signIn({ username, password });
+      console.log(data);
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Formik
       validationSchema={signInValidationSchema}
       initialValues={initialValues}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={onSubmit}
     >
       {({ handleSubmit }) => {
         return (
           <View style={styles.form}>
-            <FormikInputValue name="email" placeholder="e-mail" />
+            <FormikInputValue name="username" placeholder="username" />
             <FormikInputValue
               name="password"
               placeholder="password"
