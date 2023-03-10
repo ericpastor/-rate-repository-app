@@ -3,13 +3,14 @@ import theme from "../theme";
 import RepositoryItemHeader from "./RepositoryItemHeader";
 import RepositoryStats from "./RepositoryStats";
 
-const RepositoryItem = (props) => (
-  <View key={props.id} style={styles.container}>
-    <RepositoryItemHeader {...props} />
-    <RepositoryStats {...props} />
-  </View>
-);
-
+const RepositoryItem = ({ item }) => {
+  return (
+    <View key={item.id} style={styles.container}>
+      <RepositoryItemHeader repositories={item} />
+      <RepositoryStats {...item} />
+    </View>
+  );
+};
 export const styles = StyleSheet.create({
   container: {
     padding: 20,
