@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useDebounce } from "use-debounce";
 import useRepositories from "../hooks/useRepositories";
 import OrderByAndSearch from "./OrderBy";
@@ -29,7 +29,15 @@ export class RepositoryListContainer extends React.Component {
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => <RepositoryItem item={item} />}
         testID="repositoryItem"
-        ItemSeparatorComponent={() => <Text> </Text>}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              height: 10,
+              backgroundColor: "#E0E0E0",
+              marginTop: 10,
+            }}
+          ></View>
+        )}
         ListHeaderComponent={this.renderHeader}
       ></FlatList>
     );
@@ -52,7 +60,7 @@ const RepositoryList = () => {
         repositoriesOrder={repositoriesOrder}
         setSearchKeyword={setSearchKeyword}
       />
-      <Text style={{ paddingTop: 5 }}> </Text>
+      <Text> </Text>
       <RepositoryListContainer
         repositories={repositories}
         orderBy={orderBy}

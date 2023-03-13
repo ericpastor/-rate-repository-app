@@ -130,7 +130,7 @@ const SingleRepository = () => {
         <View
           style={{
             height: 10,
-            backgroundColor: "grey",
+            backgroundColor: "#E0E0E0",
             marginTop: 10,
           }}
         >

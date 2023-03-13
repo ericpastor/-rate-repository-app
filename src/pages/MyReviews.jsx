@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, FlatList, StyleSheet, Text, View } from "react-native";
 import { useNavigate } from "react-router-native";
 import StyledText from "../components/StyledText";
 import { DELETE_REVIEW } from "../graphql/mutations";
@@ -35,6 +35,25 @@ const ReviewItem = ({ review, refetch }) => {
     if (data.deleteReview) refetch();
   };
 
+  const createAlert = () =>
+    Alert.alert(
+      "Delete Review",
+      "Are you sure you want to delete this review?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            handleDelete();
+          },
+        },
+      ]
+    );
+
   return (
     <View style={reviewStyles.container}>
       <View
@@ -66,8 +85,9 @@ const ReviewItem = ({ review, refetch }) => {
         }}
       >
         <Button onPress={handleSubmit} title="View repository" />
-
-        <Button color={"red"} onPress={handleDelete} title="Delete review" />
+        <View>
+          <Button color={"red"} onPress={createAlert} title={"Delete review"} />
+        </View>
       </View>
     </View>
   );
@@ -94,7 +114,7 @@ const MyReviews = () => {
         <View
           style={{
             height: 10,
-            backgroundColor: "grey",
+            backgroundColor: "#E0E0E0",
             marginTop: 10,
           }}
         >

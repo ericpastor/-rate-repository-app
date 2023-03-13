@@ -81,30 +81,34 @@ export const CreateReviewContainer = ({ onSubmit }) => {
 };
 
 const CreateReview = () => {
-  const [createReview] = useCreateReview();
-
+  const [creatingReview] = useCreateReview();
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
     const { repositoryName, ownerName, rating, text } = values;
 
     try {
-      const { data } = await createReview({
+      const data = await creatingReview({
         repositoryName,
         ownerName,
         rating: Number(rating),
         text,
       });
+
       console.log(data);
-      const { createReview } = data;
-      const { repositoryId } = createReview;
+      if (data === undefined) return null;
+      const { repositoryId } = await data.createReview;
+
       navigate(`/repository/${repositoryId}`);
     } catch (e) {
       console.log(e);
     }
   };
   return (
-    <CreateReviewContainer onSubmit={onSubmit} createReview={[createReview]} />
+    <CreateReviewContainer
+      onSubmit={onSubmit}
+      createReview={[creatingReview]}
+    />
   );
 };
 export default CreateReview;
